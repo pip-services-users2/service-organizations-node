@@ -1,0 +1,126 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "pip-services.users.organizations.version1";
+option java_outer_classname = "OrganizationsProtoV1";
+option objc_class_prefix = "ORGANIZATIONS_CMD_V1";
+
+package organizations_v1;
+
+message ErrorDescription {
+  string type = 1;
+  string category = 2;
+  string code = 3;
+  string correlation_id = 4;
+  string status = 5;
+  string message = 6;
+  string cause = 7;
+  string stack_trace = 8;
+  map<string, string> details = 9;
+}
+
+message PagingParams {
+    int64 skip = 1;
+    int32 take = 2;
+    bool total = 3;
+}
+
+message Organization {
+    string id = 1;
+    string code = 2;
+    string create_time = 3;
+    string creator_id = 4;
+    bool deleted = 5;
+    bool active = 6;
+    int32 version = 7;
+
+    string name = 8;
+    string description = 9;
+    string address = 10;
+
+    string center = 11;
+    float radius = 12;
+    string geometry = 13;
+    string boundaries = 14;
+
+    string language = 15;
+    string timezone = 16;
+    string industry = 17;
+    int32 org_size = 18;
+    string purpose = 19;
+
+    string params = 20;
+}
+
+message OrganizationPage {
+    int64 total = 1;
+    repeated Organization data = 2;
+}
+
+// The organizations service definition.
+service Organizations {
+  rpc get_organizations (OrganizationPageRequest) returns (OrganizationPageReply) {}
+  rpc get_organization_by_id (OrgIdRequest) returns (OrganizationObjectReply) {}
+  rpc get_organization_by_code (OrganizationCodeRequest) returns (OrganizationObjectReply) {}
+  rpc generate_code (OrgIdRequest) returns (OrganizationCodeReply) {}
+  rpc create_organization (OrganizationObjectRequest) returns (OrganizationObjectReply) {}
+  rpc update_organization (OrganizationObjectRequest) returns (OrganizationObjectReply) {}
+  rpc delete_organization_by_id (OrgIdRequest) returns (OrganizationObjectReply) {}
+}
+
+// The request message containing the organization page request.
+message OrganizationPageRequest {
+  string correlation_id = 1;
+  map<string, string> filter = 2;
+  PagingParams paging = 3;
+}
+
+// The response message containing the organization page response
+message OrganizationPageReply {
+  ErrorDescription error = 1;
+  OrganizationPage page = 2;
+}
+
+// The request message containing the organization id request.
+message OrgIdRequest {
+  string correlation_id = 1;
+  string org_id = 2;
+}
+
+// The request message containing the organization code request.
+message OrganizationCodeRequest {
+  string correlation_id = 1;
+  string code = 2;
+}
+
+// The request message containing the organization object request.
+message OrganizationObjectRequest {
+  string correlation_id = 1;
+  Organization organization = 2;
+}
+
+// The response message containing the organization object response
+message OrganizationObjectReply {
+  ErrorDescription error = 1;
+  Organization organization = 2;
+}
+
+// The response message containing the organization code response
+message OrganizationCodeReply {
+  ErrorDescription error = 1;
+  string code = 2;
+}

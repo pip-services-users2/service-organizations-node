@@ -1,0 +1,32 @@
+import { ConfigParams } from 'pip-services3-commons-nodex';
+import { IConfigurable } from 'pip-services3-commons-nodex';
+import { IReferences } from 'pip-services3-commons-nodex';
+import { IReferenceable } from 'pip-services3-commons-nodex';
+import { FilterParams } from 'pip-services3-commons-nodex';
+import { PagingParams } from 'pip-services3-commons-nodex';
+import { DataPage } from 'pip-services3-commons-nodex';
+import { ICommandable } from 'pip-services3-commons-nodex';
+import { CommandSet } from 'pip-services3-commons-nodex';
+import { OrganizationV1 } from '../data/version1/OrganizationV1';
+import { IOrganizationsController } from './IOrganizationsController';
+export declare class OrganizationsController implements IConfigurable, IReferenceable, ICommandable, IOrganizationsController {
+    private static _defaultConfig;
+    private _dependencyResolver;
+    private _persistence;
+    private _commandSet;
+    configure(config: ConfigParams): void;
+    setReferences(references: IReferences): void;
+    getCommandSet(): CommandSet;
+    getOrganizations(correlationId: string, filter: FilterParams, paging: PagingParams): Promise<DataPage<OrganizationV1>>;
+    getOrganizationById(correlationId: string, id: string): Promise<OrganizationV1>;
+    getOrganizationByCode(correlationId: string, code: string): Promise<OrganizationV1>;
+    private calculateBoundaries;
+    private calculateGeometry;
+    private fixOrganization;
+    private generateRandomCode;
+    private validateOrGenerateCode;
+    generateCode(correlationId: string, orgId: string): Promise<string>;
+    createOrganization(correlationId: string, organization: OrganizationV1): Promise<OrganizationV1>;
+    updateOrganization(correlationId: string, organization: OrganizationV1): Promise<OrganizationV1>;
+    deleteOrganizationById(correlationId: string, id: string): Promise<OrganizationV1>;
+}
