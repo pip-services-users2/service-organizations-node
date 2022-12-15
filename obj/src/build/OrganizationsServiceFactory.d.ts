@@ -6,7 +6,7 @@ export declare class OrganizationsServiceFactory extends Factory {
     static FilePersistenceDescriptor: Descriptor;
     static MongoDbPersistenceDescriptor: Descriptor;
     static ControllerDescriptor: Descriptor;
-    static HttpServiceDescriptor: Descriptor;
+    static CmdHttpServiceDescriptor: Descriptor;
     static CommandableGrpcServiceDescriptor: Descriptor;
     static GrpcServiceDescriptor: Descriptor;
     constructor();

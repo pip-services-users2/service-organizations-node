@@ -8,7 +8,7 @@ import { References } from 'pip-services3-commons-nodex';
 import { OrganizationV1 } from '../../../src/data/version1/OrganizationV1';
 import { OrganizationsMemoryPersistence } from '../../../src/persistence/OrganizationsMemoryPersistence';
 import { OrganizationsController } from '../../../src/logic/OrganizationsController';
-import { OrganizationsHttpServiceV1 } from '../../../src/services/version1/OrganizationsHttpServiceV1';
+import { OrganizationsCommandableHttpServiceV1 } from '../../../src/services/version1/OrganizationsCommandableHttpServiceV1';
 
 let httpConfig = ConfigParams.fromTuples(
     "connection.protocol", "http",
@@ -35,22 +35,22 @@ let ORGANIZATION2: OrganizationV1 = {
     active: true
 };
 
-suite('OrganizationsHttpServiceV1', ()=> {    
+suite('OrganizationsCommandableHttpServiceV1', ()=> {    
     let persistence: OrganizationsMemoryPersistence;
-    let service: OrganizationsHttpServiceV1;
+    let service: OrganizationsCommandableHttpServiceV1;
     let rest: any;
 
     suiteSetup(async () => {
         persistence = new OrganizationsMemoryPersistence();
         let controller = new OrganizationsController();
 
-        service = new OrganizationsHttpServiceV1();
+        service = new OrganizationsCommandableHttpServiceV1();
         service.configure(httpConfig);
 
         let references: References = References.fromTuples(
             new Descriptor('service-organizations', 'persistence', 'memory', 'default', '1.0'), persistence,
             new Descriptor('service-organizations', 'controller', 'default', 'default', '1.0'), controller,
-            new Descriptor('service-organizations', 'service', 'http', 'default', '1.0'), service
+            new Descriptor('service-organizations', 'service', 'commandable-http', 'default', '1.0'), service
         );
         controller.setReferences(references);
         service.setReferences(references);
